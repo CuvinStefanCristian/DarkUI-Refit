@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35506.116 d17.12
+VisualStudioVersion = 17.12.35506.116
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DarkUI", "DarkUI\DarkUI.csproj", "{F19472F5-8C44-4C51-A8A0-B9DE5F555255}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example", "Example\Example.csproj", "{FA334815-6D78-4E9A-9F4D-6C8A58222A57}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.Refit", "Example.Refit\Example.Refit.csproj", "{A877BC62-7E5E-46D1-9BD1-B1CB00DAD30D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,8 +23,15 @@ Global
 		{FA334815-6D78-4E9A-9F4D-6C8A58222A57}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA334815-6D78-4E9A-9F4D-6C8A58222A57}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA334815-6D78-4E9A-9F4D-6C8A58222A57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A877BC62-7E5E-46D1-9BD1-B1CB00DAD30D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A877BC62-7E5E-46D1-9BD1-B1CB00DAD30D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A877BC62-7E5E-46D1-9BD1-B1CB00DAD30D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A877BC62-7E5E-46D1-9BD1-B1CB00DAD30D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8680B19D-F943-4446-B315-AFDACE90DFEA}
 	EndGlobalSection
 EndGlobal

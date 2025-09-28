@@ -137,6 +137,7 @@ namespace Example
             // 
             // btnShowInfo
             // 
+            btnShowInfo.ButtonStyle = DarkUI.Data.Enums.DarkButtonStyle.Flat;
             btnShowInfo.Location = new System.Drawing.Point(3, 29);
             btnShowInfo.Name = "btnShowInfo";
             btnShowInfo.Padding = new System.Windows.Forms.Padding(5);
