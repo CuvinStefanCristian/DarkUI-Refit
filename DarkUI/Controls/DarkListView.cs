@@ -11,10 +11,16 @@ using System.Windows.Forms;
 
 namespace DarkUI.Controls
 {
+    /// <summary>
+    /// Represents a custom list view control with support for multi-selection, icons, and details.
+    /// </summary>
     public class DarkListView : DarkScrollView
     {
         #region Event Region
 
+        /// <summary>
+        /// Occurs when the selected indices change.
+        /// </summary>
         public event EventHandler SelectedIndicesChanged;
 
         #endregion
@@ -23,9 +29,7 @@ namespace DarkUI.Controls
 
         private int _itemHeight = 20;
         private bool _multiSelect;
-
         private readonly int _iconSize = 16;
-
         private ObservableCollection<DarkListItem> _items;
         private List<int> _selectedIndices;
         private int _anchoredItemStart = -1;
@@ -35,6 +39,9 @@ namespace DarkUI.Controls
 
         #region Property Region
 
+        /// <summary>
+        /// Gets or sets the collection of items in the list view.
+        /// </summary>
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public ObservableCollection<DarkListItem> Items
@@ -46,13 +53,14 @@ namespace DarkUI.Controls
                     _items.CollectionChanged -= Items_CollectionChanged;
 
                 _items = value;
-
                 _items.CollectionChanged += Items_CollectionChanged;
-
                 UpdateListBox();
             }
         }
 
+        /// <summary>
+        /// Gets the list of selected indices.
+        /// </summary>
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public List<int> SelectedIndices
@@ -60,6 +68,9 @@ namespace DarkUI.Controls
             get { return _selectedIndices; }
         }
 
+        /// <summary>
+        /// Gets or sets the height of the individual list view items.
+        /// </summary>
         [Category("Appearance")]
         [Description("Determines the height of the individual list view items.")]
         [DefaultValue(20)]
@@ -73,6 +84,9 @@ namespace DarkUI.Controls
             }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether multiple list view items can be selected at once.
+        /// </summary>
         [Category("Behaviour")]
         [Description("Determines whether multiple list view items can be selected at once.")]
         [DefaultValue(false)]
@@ -82,11 +96,17 @@ namespace DarkUI.Controls
             set { _multiSelect = value; }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether icons are rendered with the list items.
+        /// </summary>
         [Category("Appearance")]
         [Description("Determines whether icons are rendered with the list items.")]
         [DefaultValue(false)]
         public bool ShowIcons { get; set; }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether details are rendered with the list items.
+        /// </summary>
         [Category("Appearance")]
         [Description("Determines whether details are rendered with the list items.")]
         [DefaultValue(false)]
@@ -96,6 +116,9 @@ namespace DarkUI.Controls
 
         #region Constructor Region
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DarkListView"/> class.
+        /// </summary>
         public DarkListView()
         {
             Items = new ObservableCollection<DarkListItem>();
@@ -106,6 +129,11 @@ namespace DarkUI.Controls
 
         #region Event Handler Region
 
+        /// <summary>
+        /// Handles the CollectionChanged event of the Items collection.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Items_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.NewItems != null)
@@ -159,15 +187,23 @@ namespace DarkUI.Controls
             UpdateContentSize();
         }
 
+        /// <summary>
+        /// Handles the TextChanged event of an item.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Item_TextChanged(object sender, EventArgs e)
         {
             var item = (DarkListItem)sender;
-
             UpdateItemSize(item);
             UpdateContentSize(item);
             Invalidate();
         }
 
+        /// <summary>
+        /// Handles the MouseDown event of the list view.
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnMouseDown(MouseEventArgs e)
         {
             base.OnMouseDown(e);
@@ -179,9 +215,7 @@ namespace DarkUI.Controls
                 return;
 
             var pos = OffsetMousePosition;
-
             var range = ItemIndexesInView().ToList();
-
             var top = range.Min();
             var bottom = range.Max();
             var width = Math.Max(ContentSize.Width, Viewport.Width);
@@ -202,6 +236,10 @@ namespace DarkUI.Controls
             }
         }
 
+        /// <summary>
+        /// Handles the KeyDown event of the list view.
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnKeyDown(KeyEventArgs e)
         {
             base.OnKeyDown(e);
@@ -251,11 +289,20 @@ namespace DarkUI.Controls
 
         #region Method Region
 
+        /// <summary>
+        /// Gets the index of the specified item.
+        /// </summary>
+        /// <param name="item">The item to get the index of.</param>
+        /// <returns>The index of the item.</returns>
         public int GetItemIndex(DarkListItem item)
         {
             return Items.IndexOf(item);
         }
 
+        /// <summary>
+        /// Selects the item at the specified index.
+        /// </summary>
+        /// <param name="index">The index of the item to select.</param>
         public void SelectItem(int index)
         {
             if (index < 0 || index > Items.Count - 1)
@@ -273,13 +320,16 @@ namespace DarkUI.Controls
             Invalidate();
         }
 
+        /// <summary>
+        /// Selects the items at the specified indices.
+        /// </summary>
+        /// <param name="indexes">The indices of the items to select.</param>
         public void SelectItems(IEnumerable<int> indexes)
         {
             _selectedIndices.Clear();
+            //var list = indexes.ToList();
 
-            var list = indexes.ToList();
-
-            foreach (var index in list)
+            foreach (var index in indexes)
             {
                 if (index < 0 || index > Items.Count - 1)
                     throw new IndexOutOfRangeException($"Value '{index}' is outside of valid range.");
@@ -287,15 +337,18 @@ namespace DarkUI.Controls
                 _selectedIndices.Add(index);
             }
 
-            if (SelectedIndicesChanged != null)
-                SelectedIndicesChanged(this, null);
+            SelectedIndicesChanged?.Invoke(this, null);
 
-            _anchoredItemStart = list[list.Count - 1];
-            _anchoredItemEnd = list[list.Count - 1];
+            _anchoredItemStart = indexes.Last();
+            _anchoredItemEnd = indexes.Last();
 
             Invalidate();
         }
 
+        /// <summary>
+        /// Toggles the selection state of the item at the specified index.
+        /// </summary>
+        /// <param name="index">The index of the item to toggle.</param>
         public void ToggleItem(int index)
         {
             if (_selectedIndices.Contains(index))
@@ -352,6 +405,11 @@ namespace DarkUI.Controls
             Invalidate();
         }
 
+        /// <summary>
+        /// Selects the items in the specified range.
+        /// </summary>
+        /// <param name="startRange">The start index of the range.</param>
+        /// <param name="endRange">The end index of the range.</param>
         public void SelectItems(int startRange, int endRange)
         {
             _selectedIndices.Clear();
@@ -376,12 +434,19 @@ namespace DarkUI.Controls
             Invalidate();
         }
 
+        /// <summary>
+        /// Scrolls the list view to the specified index.
+        /// </summary>
+        /// <param name="index"></param>
         private void SelectAnchoredRange(int index)
         {
             _anchoredItemEnd = index;
             SelectItems(_anchoredItemStart, index);
         }
 
+        /// <summary>
+        /// Scrolls the list view to the specified index.
+        /// </summary>
         private void UpdateListBox()
         {
             using (var g = CreateGraphics())
@@ -397,6 +462,10 @@ namespace DarkUI.Controls
             UpdateContentSize();
         }
 
+        /// <summary>
+        /// Updates the size of the specified item.
+        /// </summary>
+        /// <param name="item"></param>
         private void UpdateItemSize(DarkListItem item)
         {
             using (var g = CreateGraphics())
@@ -405,6 +474,11 @@ namespace DarkUI.Controls
             }
         }
 
+        /// <summary>
+        /// Updates the size of the specified item.
+        /// </summary>
+        /// <param name="item"></param>
+        /// <param name="g"></param>
         private void UpdateItemSize(DarkListItem item, Graphics g)
         {
             var size = g.MeasureString(item.Text, Font);
@@ -421,6 +495,9 @@ namespace DarkUI.Controls
             item.Area = new Rectangle(2, (index * ItemHeight), item.Area.Width, ItemHeight);
         }
 
+        /// <summary>
+        /// Updates the size of the content area.
+        /// </summary>
         private void UpdateContentSize()
         {
             var highestWidth = 0;
@@ -441,6 +518,10 @@ namespace DarkUI.Controls
             }
         }
 
+        /// <summary>
+        /// Updates the size of the content area.
+        /// </summary>
+        /// <param name="item"></param>
         private void UpdateContentSize(DarkListItem item)
         {
             var itemWidth = item.Area.Right + 1;
@@ -458,6 +539,9 @@ namespace DarkUI.Controls
             }
         }
 
+        /// <summary>
+        /// Ensures the selected item is visible within the viewport.
+        /// </summary>
         public void EnsureVisible()
         {
             if (SelectedIndices.Count == 0)
@@ -478,6 +562,7 @@ namespace DarkUI.Controls
             if (itemBottom > Viewport.Bottom)
                 VScrollTo((itemBottom - Viewport.Height));
         }
+
 
         private IEnumerable<int> ItemIndexesInView()
         {
@@ -502,6 +587,14 @@ namespace DarkUI.Controls
             return result;
         }
 
+        #endregion
+
+        #region Paint Region
+
+        /// <summary>
+        /// Paints the content of the list view.
+        /// </summary>
+        /// <param name="g">The graphics object used to paint the content.</param>
         protected override void PaintContent(Graphics g)
         {
             var range = ItemIndexesInView().ToList();
@@ -554,7 +647,7 @@ namespace DarkUI.Controls
                     var detilsFont = new Font(Font.FontFamily, Font.Size - 1, FontStyle.Italic);
 
                     Rectangle modRect;
-                    if(ShowDetails)
+                    if (ShowDetails)
                         modRect = new Rectangle(rect.Left + 2, rect.Top - 5, rect.Width, rect.Height);
                     else
                         modRect = new Rectangle(rect.Left + 2, rect.Top, rect.Width, rect.Height);
