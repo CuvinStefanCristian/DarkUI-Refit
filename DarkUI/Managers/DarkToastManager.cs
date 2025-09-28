@@ -1,4 +1,5 @@
-﻿using DarkUI.Data.Enums.Toast;
+﻿using DarkUI.Data.Enums;
+using DarkUI.Data.Enums.Toast;
 using DarkUI.Data.Models;
 using DarkUI.Forms;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ namespace DarkUI.Managers
         /// <summary>
         /// Shows a toast notification with the specified parameters.
         /// </summary>
-        public static void ShowToast(ToastSeverity toastSeverity, string title, string message, ToastPosition? toastPosition = null, int? duration = null, int? animSpeed = null, bool? useFadeInAnim = null)
+        public static void ShowToast(Severity toastSeverity, string title, string message, ToastPosition? toastPosition = null, int? duration = null, int? animSpeed = null, bool? useFadeInAnim = null)
         {
             if (_toasts.Count == DarkToastOptions.MaxToasts)
             {
@@ -58,7 +59,7 @@ namespace DarkUI.Managers
         /// </summary>
         public static void ShowInfo(string title, string message, int? duration = null, int? animSpeed = null, bool? useFadeInAnim = null)
         {
-            ShowToast(ToastSeverity.Info, title, message, DarkToastOptions.DefaultPosition, duration, animSpeed, useFadeInAnim);
+            ShowToast(Severity.Info, title, message, DarkToastOptions.DefaultPosition, duration, animSpeed, useFadeInAnim);
         }
 
         /// <summary>
@@ -66,7 +67,7 @@ namespace DarkUI.Managers
         /// </summary>
         public static void ShowSuccess(string title, string message, int? duration = null, int? animSpeed = null, bool? useFadeInAnim = null)
         {
-            ShowToast(ToastSeverity.Success, title, message, DarkToastOptions.DefaultPosition, duration, animSpeed, useFadeInAnim);
+            ShowToast(Severity.Success, title, message, DarkToastOptions.DefaultPosition, duration, animSpeed, useFadeInAnim);
         }
 
         /// <summary>
@@ -74,7 +75,7 @@ namespace DarkUI.Managers
         /// </summary>
         public static void ShowWarning(string title, string message, int? duration = null, int? animSpeed = null, bool? useFadeInAnim = null)
         {
-            ShowToast(ToastSeverity.Warning, title, message, DarkToastOptions.DefaultPosition, duration, animSpeed, useFadeInAnim);
+            ShowToast(Severity.Warning, title, message, DarkToastOptions.DefaultPosition, duration, animSpeed, useFadeInAnim);
         }
 
         /// <summary>
@@ -82,7 +83,7 @@ namespace DarkUI.Managers
         /// </summary>
         public static void ShowError(string title, string message, int? duration = null, int? animSpeed = null, bool? useFadeInAnim = null)
         {
-            ShowToast(ToastSeverity.Error, title, message, DarkToastOptions.DefaultPosition, duration, animSpeed, useFadeInAnim);
+            ShowToast(Severity.Error, title, message, DarkToastOptions.DefaultPosition, duration, animSpeed, useFadeInAnim);
         }
 
         /// <summary>

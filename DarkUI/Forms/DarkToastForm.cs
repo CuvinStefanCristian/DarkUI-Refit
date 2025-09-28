@@ -1,4 +1,5 @@
 ﻿using DarkUI.Config;
+using DarkUI.Data.Enums;
 using DarkUI.Data.Enums.Toast;
 using System;
 using System.Drawing;
@@ -14,7 +15,7 @@ namespace DarkUI.Forms
 
         int _duration;
         bool _useFadeInAnim;
-        ToastSeverity _toastSeverity;
+        Severity _toastSeverity;
         Color _toastColor;
 
         Point _startingPoint;
@@ -24,23 +25,23 @@ namespace DarkUI.Forms
 
         #region Constructor Region
 
-        public DarkToastForm(ToastSeverity toastSeverity, ToastPosition toastPosition, string title, string message, int duration, int animSpeed, bool useFadeInAnim)
+        public DarkToastForm(Severity toastSeverity, ToastPosition toastPosition, string title, string message, int duration, int animSpeed, bool useFadeInAnim)
         {
             if (useFadeInAnim)
                 Opacity = 0;
 
             switch (toastSeverity)
             {
-                case ToastSeverity.Info:
+                case Severity.Info:
                     _toastColor = Colors.Info;
                     break;
-                case ToastSeverity.Warning:
+                case Severity.Warning:
                     _toastColor = Colors.Warning;
                     break;
-                case ToastSeverity.Error:
+                case Severity.Error:
                     _toastColor = Colors.Error;
                     break;
-                case ToastSeverity.Success:
+                case Severity.Success:
                     _toastColor = Colors.Success;
                     break;
                 default:
@@ -185,16 +186,16 @@ namespace DarkUI.Forms
         {
             switch (_toastSeverity)
             {
-                case ToastSeverity.Info:
+                case Severity.Info:
                     pbIcon.Image = MessageBoxIcons.info;
                     break;
-                case ToastSeverity.Warning:
+                case Severity.Warning:
                     pbIcon.Image = MessageBoxIcons.warning;
                     break;
-                case ToastSeverity.Error:
+                case Severity.Error:
                     pbIcon.Image = MessageBoxIcons.error;
                     break;
-                case ToastSeverity.Success:
+                case Severity.Success:
                     pbIcon.Image = MessageBoxIcons.success;
                     break;
                 default:
