@@ -3,14 +3,14 @@
     <TargetFramework>net9.0-windows</TargetFramework>
     <OutputType>Library</OutputType>
     <PackageId>DarkUI.Refit</PackageId>
-    <Version>1.2.0</Version>
+    <Version>2.0.1</Version>
     <Authors>RobinPerris; Stefan Cuvin</Authors>
     <Company>EasyTech</Company>
     <Product>DarkUI-Refit</Product>
     <Title>DarkUI-Refit</Title>
     <PackageDescription>DarkUI-Refit is a fork of the DarkUI WindowsForms library created by RobinPerris</PackageDescription>
     <PackageProjectUrl>https://github.com/CuvinStefanCristian/DarkUI-Refit</PackageProjectUrl>
-    <PackageTags>winforms;ui;dark;theme;windows;dock;docking</PackageTags>
+    <PackageTags>winforms;ui;dark;theme;windows;dock;docking;net9.0</PackageTags>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
@@ -21,6 +21,14 @@
     <PackageIcon>icon-64.png</PackageIcon>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <Description>Fork of the DarkUI library originally created by Robin Perris who sadly passed away. This fork is primarily for personal changes and needs, but if you find any changes that you like to use, feel free to use / modify this.</Description>
+    <RepositoryUrl>https://github.com/CuvinStefanCristian/DarkUI-Refit</RepositoryUrl>
+    <PackageReleaseNotes>New:
+- Added Circular Progress Bars
+
+BREAKING CHANGES: 
+- A general project cleanup resulted in many of the namespaces to change (ex. DarkButtonStyle was in DarkUI.Controls and is now in DarkUI.Data.Enums)</PackageReleaseNotes>
+    <PackageReadmeFile>ReadMe.md</PackageReadmeFile>
   </PropertyGroup>
   <ItemGroup>
     <None Include="..\icon-64.png">
@@ -28,6 +36,10 @@
       <PackagePath>\</PackagePath>
     </None>
     <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="bin\Release\ReadMe.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
