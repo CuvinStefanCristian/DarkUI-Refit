@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace Example
 {
-    public partial class MainForm : DarkForm
+    public partial class MainForm : DarkMetroForm
     {
         #region Field Region
 

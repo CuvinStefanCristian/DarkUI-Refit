@@ -36,6 +36,7 @@ namespace DarkUI.Forms
         public DarkMessageBox()
         {
             InitializeComponent();
+            DialogResult = DialogResult.Cancel;
         }
 
         public DarkMessageBox(string message, string title, DarkMessageBoxIcon icon, DarkDialogButton buttons)
@@ -46,6 +47,9 @@ namespace DarkUI.Forms
 
             DialogButtons = buttons;
             SetIcon(icon);
+
+            picIcon.ClientSize = new Size(48, 48);
+            picIcon.SizeMode = PictureBoxSizeMode.StretchImage;
         }
 
         public DarkMessageBox(string message)
@@ -118,47 +122,50 @@ namespace DarkUI.Forms
 
         private void CalculateSize()
         {
-            var width = 260; var height = 124;
-
-            // Reset form back to original size
-            Size = new Size(width, height);
+            int padding = 15; // Standard spacing for your margins
+            int buttonHeight = 30; // Adjust this if your custom buttons are taller
 
             lblText.Text = string.Empty;
             lblText.AutoSize = true;
             lblText.Text = _message;
 
-            // Set the minimum dialog size to whichever is bigger - the original size or the buttons.
-            var minWidth = Math.Max(width, TotalButtonSize + 15);
+            // 1. CALCULATE REQUIRED WIDTH
+            // The width needs to fit: (Icon + Text) OR (Buttons). Whichever is wider.
+            int contentWidth = picIcon.Right + padding + lblText.Width + padding;
+            int requiredWidth = Math.Max(contentWidth, TotalButtonSize + (padding * 2));
 
-            // Calculate the total size of the message
-            var totalWidth = lblText.Right + 25;
+            int finalClientWidth = Math.Min(requiredWidth, _maximumWidth); // Cap it at your max width
 
-            // Make sure we're not making the dialog bigger than the maximum size
-            if (totalWidth < _maximumWidth)
+            // 2. HANDLE TEXT WRAPPING & POSITIONING
+            if (contentWidth > _maximumWidth)
             {
-                // Width is smaller than the maximum width.
-                // This means we can have a single-line message box.
-                // Move the label to accomodate this.
-                width = totalWidth;
-                lblText.Top = picIcon.Top + (picIcon.Height / 2) - (lblText.Height / 2);
+                // Multi-line scenario: Text is too long, we need to wrap it
+                lblText.AutoSize = false;
+                lblText.AutoUpdateHeight = true;
+                lblText.Width = finalClientWidth - picIcon.Right - (padding * 2);
             }
             else
             {
-                // Width is larger than the maximum width.
-                // Change the label size and wrap it.
-                width = _maximumWidth;
-                var offsetHeight = Height - picIcon.Height;
-                lblText.AutoUpdateHeight = true;
-                lblText.Width = width - lblText.Left - 25;
-                height = offsetHeight + lblText.Height;
+                // Single-line scenario: Center the text vertically next to the icon
+                lblText.Top = picIcon.Top + (picIcon.Height / 2) - (lblText.Height / 2);
             }
 
-            // Force the width to the minimum width
-            if (width < minWidth)
-                width = minWidth;
+            // 3. CALCULATE REQUIRED HEIGHT
+            // The top section must fit whichever is taller: the icon OR the text
+            int contentHeight = Math.Max(picIcon.Height, lblText.Height);
 
-            // Set the new size of the dialog
-            Size = new Size(width, height);
+            // Total internal height = Top margin + Content + Middle margin + Buttons + Bottom margin
+            int finalClientHeight = picIcon.Top + contentHeight + padding + buttonHeight + padding;
+
+            // 4. ENFORCE ABSOLUTE MINIMUMS
+            // Ensures the dialog never looks awkwardly tiny, even for a simple "Ok" message
+            finalClientWidth = Math.Max(finalClientWidth, 260);
+            finalClientHeight = Math.Max(finalClientHeight, 100);
+
+            // 5. APPLY THE SIZE
+            // Using ClientSize instead of Size guarantees the internal math is perfect, 
+            // regardless of whether the user is on Windows 10 or 11 (which have different border sizes).
+            this.ClientSize = new Size(finalClientWidth, finalClientHeight);
         }
 
         #endregion

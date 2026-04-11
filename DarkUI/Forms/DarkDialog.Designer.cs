@@ -170,7 +170,6 @@ namespace DarkUI.Forms
             Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             Name = "DarkDialog";
             Text = "DarkDialog";
-            TitleBarStyle = DarkTitleBarStyle.ToolWindow;
             pnlFooter.ResumeLayout(false);
             flowInner.ResumeLayout(false);
             ResumeLayout(false);

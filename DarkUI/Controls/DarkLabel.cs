@@ -55,6 +55,11 @@ namespace DarkUI.Controls
         public DarkLabel()
         {
             ForeColor = Colors.LightText;
+            
+            // Enable user interaction events (Click, DoubleClick, MouseDown, etc.)
+            SetStyle(ControlStyles.UserMouse, true);
+            SetStyle(ControlStyles.StandardClick, true);
+            SetStyle(ControlStyles.StandardDoubleClick, true);
         }
 
         #endregion
