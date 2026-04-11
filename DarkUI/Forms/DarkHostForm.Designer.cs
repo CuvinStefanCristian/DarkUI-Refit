@@ -30,7 +30,7 @@ namespace DarkUI.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            dockPanel = new Docking.DarkDockPanel();
+            dockPanel = new DarkUI.Docking.DarkDockPanel();
             SuspendLayout();
             // 
             // dockPanel
@@ -40,14 +40,14 @@ namespace DarkUI.Forms
             dockPanel.HostFormText = null;
             dockPanel.Location = new System.Drawing.Point(2, 30);
             dockPanel.Name = "dockPanel";
-            dockPanel.Size = new System.Drawing.Size(828, 496);
+            dockPanel.Size = new System.Drawing.Size(844, 535);
             dockPanel.TabIndex = 0;
             // 
             // DarkHostForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(832, 528);
+            ClientSize = new System.Drawing.Size(848, 567);
             Controls.Add(dockPanel);
             Name = "DarkHostForm";
             Text = "DarkHostForm";

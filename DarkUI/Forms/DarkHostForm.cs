@@ -1,11 +1,12 @@
-﻿using DarkUI.Data.Enums;
+﻿using DarkUI.Controls;
+using DarkUI.Data.Enums;
 using DarkUI.Docking;
 using DarkUI.Managers;
 using System.Windows.Forms;
 
 namespace DarkUI.Forms
 {
-    public partial class DarkHostForm : DarkForm
+    public partial class DarkHostForm : DarkMetroForm
     {
         public bool HasContent => dockPanel.Contents.Count > 0;
         public DarkDockPanel DockPanel => dockPanel;
@@ -42,7 +43,7 @@ namespace DarkUI.Forms
             if (HasContent)
             {
                 var result = DarkMessageBox.ShowWarning("Close all documents?", "Attention", DarkDialogButton.YesNo);
-                if (result == DialogResult.No)
+                if (result == DialogResult.No || result == DialogResult.Cancel)
                 {
                     e.Cancel = true;
                     return;

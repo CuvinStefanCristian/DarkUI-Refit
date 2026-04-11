@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace DarkUI.Forms
 {
-    internal partial class DarkToastForm : DarkForm
+    internal partial class DarkToastForm : DarkMetroForm
     {
         #region Field Region
 

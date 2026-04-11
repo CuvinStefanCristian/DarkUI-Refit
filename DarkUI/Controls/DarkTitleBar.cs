@@ -9,7 +9,7 @@ namespace DarkUI.Controls
     public class DarkTitleBar : Panel
     {
         #region Field Region
-        DarkForm _form;
+        DarkMetroForm _form;
 
         private PictureBox pbIcon;
         private DarkLabel lbTitle;
@@ -22,7 +22,7 @@ namespace DarkUI.Controls
         private const int DragThreshold = 5; // Pixels to move before starting drag
         #endregion
 
-        public DarkTitleBar(DarkForm form, DarkTitleBarStyle titleBarStyle)
+        public DarkTitleBar(DarkMetroForm form, DarkTitleBarStyle titleBarStyle)
         {
             _form = form;
 
@@ -174,7 +174,8 @@ namespace DarkUI.Controls
             btnMaximize.Visible = false;
             btnMaximize.Dock = DockStyle.Right;
             btnMaximize.TextImageRelation = TextImageRelation.Overlay;
-            btnMaximize.Visible = _form.MaximizeBox;
+            if (_form.TitleBarStyle == DarkTitleBarStyle.Standard)
+                btnMaximize.Visible = _form.MaximizeBox;
             // 
             // btnMinimize
             // 
@@ -188,7 +189,8 @@ namespace DarkUI.Controls
             btnMinimize.Visible = false;
             btnMinimize.Dock = DockStyle.Right;
             btnMinimize.TextImageRelation = TextImageRelation.Overlay;
-            btnMinimize.Visible = _form.MinimizeBox;
+            if (_form.TitleBarStyle == DarkTitleBarStyle.Standard)
+                btnMinimize.Visible = _form.MinimizeBox;
             //
             // DarkDefaultTitleBar
             // 
